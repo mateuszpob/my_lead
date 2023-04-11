@@ -4,5 +4,5 @@ sail up
 ```
 Testy:
 ```bash
-sail test
+sail artisan test
 ```
