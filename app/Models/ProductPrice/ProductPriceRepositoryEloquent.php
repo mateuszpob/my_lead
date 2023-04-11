@@ -19,6 +19,11 @@ class ProductPriceRepositoryEloquent implements ProductPriceRepositoryInterface
         ]);
     }
 
+    public function getByProductId(int $productId) : Collection
+    {
+        return ProductPrice::where('product_id', $productId)->get();
+    }
+
     public function delete(Collection $prices) : void
     {
         foreach($prices as $price)

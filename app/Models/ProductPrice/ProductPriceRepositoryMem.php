@@ -28,6 +28,13 @@ class ProductPriceRepositoryMem implements ProductPriceRepositoryInterface
         return $productPrice;
     }
 
+    public function getByProductId(int $productId) : Collection
+    {
+        return collect(array_filter($this->productPrices, function($v, $k) use ($productId) {
+            return $v->product_id === $productId;
+        }, ARRAY_FILTER_USE_BOTH));
+    }
+
     public function delete(Collection $prices) : void
     {
         foreach($prices as $price)

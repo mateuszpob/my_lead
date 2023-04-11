@@ -15,18 +15,4 @@ class Product extends Model
         'name',
         'description'
     ];
-
-    protected $appends = [
-        'prices'
-    ];
-
-    public function getPricesAttribute()
-    {
-        return $this->prices()->get();
-    }
-
-    public function prices() : HasMany
-    {
-        return $this->hasMany(ProductPrice::class);
-    }
 }

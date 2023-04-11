@@ -21,13 +21,13 @@ Route::post('/auth/login', [AuthController::class, 'loginUser']);
 
 Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
     Route::get('/get', [ProductController::class, 'getProducts'])->name('get.many');
-    Route::get('/get/{product:id}', [ProductController::class, 'getProduct'])->name('get.single');
+    Route::get('/get/{id}', [ProductController::class, 'getProduct'])->name('get.single');
 });
 
-// Route::middleware(['auth:sanctum'])->group(function () {
-//     Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
-//         Route::post('/create', [ProductController::class, 'createProduct'])->name('create');
-//         Route::put('/edit/{product:id}', [ProductController::class, 'editProduct'])->name('edit');
-//         Route::delete('/{product:id}', [ProductController::class, 'deleteProduct'])->name('delete');
-//     });
-// });
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+        Route::post('/create', [ProductController::class, 'createProduct'])->name('create');
+        Route::put('/edit/{id}', [ProductController::class, 'editProduct'])->name('edit');
+        Route::delete('/{id}', [ProductController::class, 'deleteProduct'])->name('delete');
+    });
+});

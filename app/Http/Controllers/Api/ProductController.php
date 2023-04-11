@@ -15,13 +15,16 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    public function __construct(
+        private GetProductsServiceInterface $getService
+    )
     {
 
     }
 
-    public function getProduct(Product $product)
+    public function getProduct(int $productId, GetProductsServiceInterface $service)
     {
+        $product = $this->getProductById($productId);
         return response($product, 200);
     }
 
@@ -42,15 +45,28 @@ class ProductController extends Controller
         return response(null, 201);
     }
 
-    public function editProduct(Product $product, EditProductServiceInterface $service, EditProductRequest $request)
+    public function editProduct(int $productId, EditProductServiceInterface $service, EditProductRequest $request)
     {
+        $product = $this->getProductById($productId);
         $service->editProduct($product, $request->validated());
         return response($product, 200);
     }
 
-    public function deleteProduct(Product $product, DeleteProductServiceInterface $service)
+    public function deleteProduct(int $productId, DeleteProductServiceInterface $service)
     {
+        $product = $this->getProductById($productId);
+
         $service->deleteProduct($product);
         return response(null, 200);
+    }
+
+    private function getProductById(int $productId) : ?Product
+    {
+        $product =  $this->getService->getProduct($productId);
+        if(is_null($product))
+        {
+            abort(404);
+        }
+        return $product;
     }
 }

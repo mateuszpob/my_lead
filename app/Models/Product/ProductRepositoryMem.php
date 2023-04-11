@@ -27,6 +27,10 @@ class ProductRepositoryMem implements ProductRepositoryInterface
         $this->save($product);
         return $product;
     }
+    public function getProduct(int $id) : ?Product
+    {
+        return $this->products[$id] ?? null;
+    }
 
     public function getProducts(int $limit, int $offset, ?string $order, ?string $sort) : Collection
     {

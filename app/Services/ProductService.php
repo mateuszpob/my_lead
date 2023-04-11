@@ -15,10 +15,22 @@ class ProductService implements CreateProductServiceInterface, GetProductsServic
     )
     {}
 
-    public function createProduct(array $productData, array $prices) : void
+    public function createProduct(array $productData, array $prices) : Product
     {
-        $product = $this->productRepositiory->create($productData);
+        $product = $this->productRepositiory->create($productData); //dd($product);
         $this->addPricesToProduct($product, $prices);
+        return $product;
+    }
+
+    public function getProduct(int $id) : ?Product
+    {
+        $product = $this->productRepositiory->getProduct($id);
+        if(is_null($product))
+        {
+            return null;
+        }
+        $product->prices = $this->productPriceRepositiory->getByProductId($product->id);
+        return $product;
     }
 
     public function getProducts(int $limit, int $offset, ?string $order, ?string $sort) : Collection

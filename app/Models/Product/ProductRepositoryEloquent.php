@@ -9,17 +9,25 @@ class ProductRepositoryEloquent implements ProductRepositoryInterface
 {
     public function save(Product $product): void
     {
+        unset($product->prices);
         $product->save();
     }
 
-    public function create(array $productData): Product
+    public function create(array $productData) : Product
     {
-        return Product::create($productData);
+        $product = Product::create($productData);
+        $product->prices = new Collection();
+        return $product;
+    }
+
+    public function getProduct(int $id) : ?Product
+    {
+        return Product::find($id);
     }
 
     public function getProducts(int $limit, int $offset, ?string $order, ?string $sort) : Collection
     {
-        $query = Product::query()->take($limit)->offset($offset);
+        $query = Product::query()->select(["id", "name"])->take($limit)->offset($offset);
         if(!is_null($order) && !is_null($sort))
         {
             $query->orderBy($order, $sort);

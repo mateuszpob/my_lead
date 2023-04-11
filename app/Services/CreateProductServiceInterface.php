@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Product\Product;
+
 interface CreateProductServiceInterface
 {
-    public function createProduct(array $productData, array $prices) : void;
+    public function createProduct(array $productData, array $prices) : Product;
 }
