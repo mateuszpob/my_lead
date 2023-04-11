@@ -4,5 +4,5 @@ namespace App\Services;
 
 interface CreateProductServiceInterface
 {
-    public function createProduct(array $data) : void;
+    public function createProduct(array $productData, array $prices) : void;
 }

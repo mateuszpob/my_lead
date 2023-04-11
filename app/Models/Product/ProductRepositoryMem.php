@@ -20,11 +20,25 @@ class ProductRepositoryMem implements ProductRepositoryInterface
 
     public function create(array $productData): Product
     {
-        return Product::create($productData);
+        $product = new Product();
+        $product->id = $this->generateId();
+        $product->name = $productData['name'];
+        $product->description = $productData['description'];
+        $this->save($product);
+        return $product;
     }
 
     public function getProducts(int $limit, int $offset, ?string $order, ?string $sort) : Collection
     {
         return collect($this->products);
+    }
+
+    public function delete(Product $product) : void
+    {
+        unset($this->products[$product->id]);
+    }
+
+    private function generateId($length = 10) {
+        return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
     }
 }

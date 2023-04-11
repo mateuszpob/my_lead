@@ -19,16 +19,15 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
 
-
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+    Route::get('/get', [ProductController::class, 'getProducts'])->name('get.many');
+    Route::get('/get/{product:id}', [ProductController::class, 'getProduct'])->name('get.single');
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
-
-    Route::post('/create-product', [ProductController::class, 'createProduct'])->name('product.create');
-    Route::get('/get-products', [ProductController::class, 'getProducts'])->name('product.create');
-
-
-});
+// Route::middleware(['auth:sanctum'])->group(function () {
+//     Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+//         Route::post('/create', [ProductController::class, 'createProduct'])->name('create');
+//         Route::put('/edit/{product:id}', [ProductController::class, 'editProduct'])->name('edit');
+//         Route::delete('/{product:id}', [ProductController::class, 'deleteProduct'])->name('delete');
+//     });
+// });

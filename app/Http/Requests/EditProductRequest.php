@@ -3,15 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class ListRequest extends FormRequest
+class EditProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -22,10 +23,9 @@ class ListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'limit' => 'required|integer',
-            'offset' => 'required|integer',
-            'order' => 'string|required_with:sort',
-            'sort' => 'string|required_with:order',
+            'name' => 'required|string|max:64',
+            'description' => 'required|string|max:255',
+            'prices' => 'array'
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models\Product;
 
+use App\Models\ProductPrice\ProductPrice;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductRepositoryEloquent implements ProductRepositoryInterface
@@ -24,5 +25,10 @@ class ProductRepositoryEloquent implements ProductRepositoryInterface
             $query->orderBy($order, $sort);
         }
         return $query->get();
+    }
+
+    public function delete(Product $product) : void
+    {
+        $product->delete();
     }
 }

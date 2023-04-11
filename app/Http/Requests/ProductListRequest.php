@@ -12,6 +12,6 @@ class ProductListRequest extends ListRequest
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return true;
     }
 }
