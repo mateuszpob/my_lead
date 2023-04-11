@@ -30,13 +30,17 @@ class ProductPriceRepositoryMem implements ProductPriceRepositoryInterface
 
     public function getByProductId(int $productId) : Collection
     {
-        return collect(array_filter($this->productPrices, function($v, $k) use ($productId) {
+        return Collection::make(array_filter($this->productPrices, function($v, $k) use ($productId) {
             return $v->product_id === $productId;
         }, ARRAY_FILTER_USE_BOTH));
     }
 
-    public function delete(Collection $prices) : void
+    public function delete(?Collection $prices) : void
     {
+        if(!is_iterable($prices))
+        {
+            return;
+        }
         foreach($prices as $price)
         {
             unset($this->productPrices[$price->id]);

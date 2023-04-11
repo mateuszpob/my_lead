@@ -34,7 +34,7 @@ class ProductRepositoryMem implements ProductRepositoryInterface
 
     public function getProducts(int $limit, int $offset, ?string $order, ?string $sort) : Collection
     {
-        return collect($this->products);
+        return Collection::make($this->products);
     }
 
     public function delete(Product $product) : void

@@ -24,8 +24,12 @@ class ProductPriceRepositoryEloquent implements ProductPriceRepositoryInterface
         return ProductPrice::where('product_id', $productId)->get();
     }
 
-    public function delete(Collection $prices) : void
+    public function delete(?Collection $prices) : void
     {
+        if(!is_iterable($prices))
+        {
+            return;
+        }
         foreach($prices as $price)
         {
             $price->delete();

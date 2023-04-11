@@ -9,5 +9,5 @@ interface ProductPriceRepositoryInterface
     public function save(ProductPrice $productPrice): void;
     public function create(float $price, int $productId): ProductPrice;
     public function getByProductId(int $productId) : Collection;
-    public function delete(Collection $prices) : void;
+    public function delete(?Collection $prices) : void;
 }
